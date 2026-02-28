@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MyVault</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>MyVault</h1>
+                <div class="header-actions">
+                    <input type="text" id="searchInput" placeholder="Search items..." class="search-box">
+                </div>
+            </header>
+
+            <div class="stats-bar">
+                <div class="stat-card-unified">
+                    <div class="stat-item">
+                        <div class="stat-label">Total Items</div>
+                        <div class="circular-progress">
+                            <svg class="progress-ring" width="180" height="180">
+                                <circle class="progress-ring-circle-bg" cx="90" cy="90" r="80"></circle>
+                                <g id="itemsCircleSegments"></g>
+                            </svg>
+                            <div class="stat-value-center" id="totalItems">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-label">Total Value</div>
+                        <div class="circular-progress">
+                            <svg class="progress-ring" width="180" height="180">
+                                <circle class="progress-ring-circle-bg" cx="90" cy="90" r="80"></circle>
+                                <g id="valueCircleSegments"></g>
+                            </svg>
+                            <div class="stat-value-center" id="totalValue">$0.00</div>
+                        </div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-label">Categories</div>
+                        <div class="circular-progress">
+                            <svg class="progress-ring" width="180" height="180">
+                                <circle class="progress-ring-circle-bg" cx="90" cy="90" r="80"></circle>
+                                <g id="categoriesCircleSegments"></g>
+                            </svg>
+                            <div class="stat-value-center" id="totalCategories">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabs-container">
+                <div class="tabs" id="categoryTabs">
+                    <div class="tab active" data-category="all">
+                        <img src="Images/all.png" alt="All Items" class="tab-icon-img">
+                        <span class="tab-label">All Items</span>
+                    </div>
+                    <div class="tab add-tab" id="addTab">
+                        <span class="tab-icon">+</span>
+                    </div>
+                </div>
+            </div>
+
+            <main>
+                <div class="tab-content">
+                    <div id="itemsList" class="items-grid">
+                        <div class="item-card add-item-card" id="addItemCard">
+                            <div class="add-item-content">
+                                <div class="add-icon">+</div>
+                                <div class="add-text">Add New Item</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Add Category page-->
+        <div id="categoryModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add New Category</h2>
+                </div>
+                <form id="categoryForm">
+                    <div class="form-group">
+                        <label for="categoryName">Category Name *</label>
+                        <input type="text" id="categoryName" required placeholder="i.e. Star Wars, Kamen Rider">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category Image</label>
+                        <div class="image-input-container">
+                            <div class="image-preview" id="categoryImagePreview">
+                                <div class="image-placeholder">No Image Selected</div>
+                            </div>
+                            <div class="image-input-buttons">
+                                <button type="button" class="btn btn-secondary" id="uploadCategoryImageBtn">
+                                    Upload Image
+                                </button>
+                                <input type="file" id="categoryImageFileInput" accept="image/*" style="display: none;">
+                                <div class="url-input-group">
+                                    <input type="text" id="categoryImageUrlInput" placeholder="Or paste image URL here">
+                                </div>
+                            </div>
+                            <input type="hidden" id="categoryImagePath">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelCategoryBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>  
+        </div>
+
+        <!-- Add/Editing Item page-->
+        <div id="itemModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Add New Item</h2>
+                </div>
+                <form id="itemForm">
+                    <input type="hidden" id="itemId">
+
+                    <div class="form-group">
+                        <label for="itemName">Item Name *</label>
+                        <input type="text" id="itemName" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemCategory">Category *</label>
+                            <select id="itemCategory" required>
+                                <option value="">Select a category...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Image</label>
+                            <div class="image-input-container">
+                                <div class="image-preview" id="imagePreview">
+                                    <div class="image-placeholder">No Image Selected</div>
+                                </div>
+                                <div class="image-input-buttons">
+                                    <button type="button" class="btn btn-secondary" id="uploadImageBtn">
+                                        Upload Image
+                                    </button>
+                                    <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
+                                    <div class="url-input-group">
+                                        <input type="text" id="imageUrlInput" placeholder="Or paste image URL here">
+                                    </div>
+                                </div>
+                                <input type="hidden" id="imagePath">
+                                <input type="hidden" id="imageType">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemPurchaseDate">Purchase Date</label>
+                            <input type="date" id="itemPurchaseDate">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="itemPurchasePrice">Purchase Price</label>
+                            <input type="number" id="itemPurchasePrice" step="0.01" placeholder="0.00">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="renderer.js"></script>
+    </body>
+</html>

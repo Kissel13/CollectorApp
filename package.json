@@ -1,0 +1,23 @@
+{
+    "name": "collection-tracker",
+    "version": "1.0.0",
+    "description": "Desktop app for tracking collectable items",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "keywords": [
+        "electron",
+        "collection",
+        "tracker"
+    ],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "electron": "^28.0.0",
+        "electron-rebuild": "^3.2.9"
+    },
+    "dependencies": {
+        "better-sqlite3": "^9.2.2"
+    }
+}
