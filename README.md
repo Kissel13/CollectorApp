@@ -6,3 +6,5 @@ MyVault is a simple Electron based application aimed towards giving both beginne
 ## Preview
 
 ## Tech Stack
+
+## License
